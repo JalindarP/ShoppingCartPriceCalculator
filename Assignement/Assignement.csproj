@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CartBL\Interface\IPriceCalculator.cs" />
+    <Compile Include="CartBL\PriceCalculator.cs" />
     <Compile Include="Model\Item.cs" />
     <Compile Include="Model\Offer.cs" />
     <Compile Include="Program.cs" />

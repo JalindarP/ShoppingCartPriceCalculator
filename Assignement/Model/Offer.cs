@@ -4,18 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignement
+namespace Assignement.Model
 {
-    internal class Offer
+    public class Offer
     {
-        internal Offer(Dictionary<int, int> buy, Dictionary<int, int> free)
+        public Offer(Dictionary<int, int> buy, Dictionary<int, int> free)
         {
             Buy = buy;
             Free = free;
         }
 
-        internal Dictionary<int, int> Buy { get; set; }
-        internal Dictionary<int, int> Free { get; set; }
+        public Dictionary<int, int> Buy { get; set; }
+        public Dictionary<int, int> Free { get; set; }
     }
-
 }

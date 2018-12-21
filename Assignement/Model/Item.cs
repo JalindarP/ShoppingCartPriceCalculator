@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assignement
+namespace Assignement.Model
 {
-    internal class Item
+    public class Item
     {
-        internal Item(int? id, string name, double? price, double? discount)
+        public Item(int? id, string name, double? price, double? discount)
         {
             Id = id ?? -1;
             Name = name ?? "";
@@ -16,10 +16,9 @@ namespace Assignement
             Discount = discount ?? 0;
         }
 
-        internal int Id { get; set; }
-        internal string Name { get; set; }
-        internal double Price { get; set; }
-        internal double Discount { get; set; }
-
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
+        public double Discount { get; set; }
     }
 }
