@@ -7,63 +7,13 @@ using System.Threading.Tasks;
 
 namespace Assignement
 {
-    internal class Item
-    {
-        internal Item(int? id, string name, double? price, double? discount)
-        {
-            Id = id ?? -1;
-            Name = name ?? "";
-            Price = price ?? 0;
-            Discount = discount ?? 0;
-        }
-
-        internal int Id { get; set; }
-        internal string Name { get; set; }
-        internal double Price { get; set; }
-        internal double Discount { get; set; }
-
-    }
-
-    internal class Offer
-    {
-        internal Offer(Dictionary<int, int> buy, Dictionary<int, int> free)
-        {
-            Buy = buy;
-            Free = free;
-        }
-
-        internal Dictionary<int,int> Buy { get; set; }
-        internal Dictionary<int,int> Free { get; set; }
-    }
-
     class Program
     {
         static void Main(string[] args)
         {
-            List<Item> items = new List<Item>();
-            using (StreamReader stream = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\Input\Items.csv")))
-            {
-                stream.ReadLine();
-                while (stream.Peek() >= 0)
-                {
-                    string[] item = stream.ReadLine().Split(',');
-                    items.Add(new Item(Convert.ToInt32(item[0]), Convert.ToString(item[1]), Convert.ToDouble(item[2]), Convert.ToDouble(item[3])));
-                }
-            }
+            List<Item> items = ReadShoppingItems();
 
-            List<Offer> offers = new List<Offer>();
-            using (StreamReader stream = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\Input\Offer.csv")))
-            {
-                stream.ReadLine();
-                while (stream.Peek() >= 0)
-                {
-                    string[] offer = stream.ReadLine().Split('=');
-                    string[] buy = offer[0].Split('+');
-                    string[] free = offer[1].Split('+');
-
-                    offers.Add(new Offer(BuildKeyValue(buy.ToList()), BuildKeyValue(free.ToList())));
-                }
-            }
+            List<Offer> offers = ReadOffers();
 
             DisplayItems(items);
             DisplayOffers(items, offers);
@@ -82,6 +32,41 @@ namespace Assignement
             DisplayPrice(cart);
 
             Console.Read();
+        }
+
+        private static List<Offer> ReadOffers()
+        {
+            List<Offer> offers = new List<Offer>();
+            using (StreamReader stream = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\Input\Offer.csv")))
+            {
+                stream.ReadLine();
+                while (stream.Peek() >= 0)
+                {
+                    string[] offer = stream.ReadLine().Split('=');
+                    string[] buy = offer[0].Split('+');
+                    string[] free = offer[1].Split('+');
+
+                    offers.Add(new Offer(BuildKeyValue(buy.ToList()), BuildKeyValue(free.ToList())));
+                }
+            }
+
+            return offers;
+        }
+
+        private static List<Item> ReadShoppingItems()
+        {
+            List<Item> items = new List<Item>();
+            using (StreamReader stream = new StreamReader(Path.Combine(Directory.GetCurrentDirectory(), @"..\..\Input\Items.csv")))
+            {
+                stream.ReadLine();
+                while (stream.Peek() >= 0)
+                {
+                    string[] item = stream.ReadLine().Split(',');
+                    items.Add(new Item(Convert.ToInt32(item[0]), Convert.ToString(item[1]), Convert.ToDouble(item[2]), Convert.ToDouble(item[3])));
+                }
+            }
+
+            return items;
         }
 
         private static IEnumerable<Item> AddInFreeCart(List<Item> items, List<Item> cart, List<Offer> offers)
